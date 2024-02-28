@@ -66,7 +66,7 @@ def main():
     #model.set_weights(new_weights)
     agent = PPOAgent(model)
     model_update_times = 0
-    with open(f'/home/zhaoyp/guandan_tog/learner_torch/ckpt_bak/{model_update_times}.pth', 'wb') as f:
+    with open(f'/aiarena/nas/guandan_tog/learner_torch/ckpt_bak/{model_update_times}.pth', 'wb') as f:
         pickle.dump(agent.get_weights(), f)
 
     # Configure experiment directory
@@ -124,11 +124,11 @@ def main():
                 stat = agent.update(data)
                 model_update_times += 1
                 weights = agent.get_weights()
-                with open(f'/home/zhaoyp/guandan_tog/learner_torch/ckpt_bak/{model_update_times}.pth', 'wb') as f:
+                with open(f'/aiarena/nas/guandan_tog/learner_torch/ckpt_bak/{model_update_times}.pth', 'wb') as f:
                     pickle.dump(weights, f)
                 
                 if model_update_times > 4:
-                    os.remove(f'/home/zhaoyp/guandan_tog/learner_torch/ckpt_bak/{model_update_times - 5}.pth')
+                    os.remove(f'/aiarena/nas/guandan_tog/learner_torch/ckpt_bak/{model_update_times - 5}.pth')
                 # print(stat)
                 # if log_times%1000 == 0:
                 if log_times%100 == 0:

@@ -670,9 +670,28 @@ def run_one_client(index, args):
     try:
         client.connect()
     except:
-        os.system("bash /home/zhaoyp/guandan_tog/actor_torch/rekill.sh")
+        print("Connect failed, killing in game.py")
+        os.system("bash /aiarena/nas/guandan_tog/actor_torch/rekill.sh")
         exit()
     client.run_forever()
+
+    # # 这里多尝试几次，不然很容易连接不上
+    # max_retries = 3  # 最大尝试次数
+    # args.client_index = index
+    # for attempt in range(1, max_retries + 1):
+    #     client = MyClient(f'ws://127.0.0.1:23456/game/client{index}', args)
+    #     try:
+    #         client.connect()
+    #         break  # 连接成功，跳出循环
+    #     except Exception as e:
+    #         print(f"Connection attempt {attempt} failed: {str(e)}")
+    #         time.sleep(1)  # 休眠1秒后再次尝试
+
+    #         if attempt == max_retries:
+    #             print(f"Max retries ({max_retries}) reached. Killing in game.py")
+    #             os.system("bash /aiarena/nas/guandan_tog/actor_torch/rekill.sh")
+    #             exit()
+    # client.run_forever()
 
 
 def main():
