@@ -21,6 +21,6 @@ while True:
     res = find_procs_by_name('/root/miniconda3/envs/guandan/bin/python')
     # res = find_procs_by_name('python')
     if len(res) < 10:
-        print('restart actor')
-        os.system("bash /home/zhaoyp/guandan_tog/actor_torch/restart.sh")
+        print('restart in restart.py')
+        os.system("bash /aiarena/nas/guandan_tog/actor_torch/restart.sh")
         time.sleep(300)

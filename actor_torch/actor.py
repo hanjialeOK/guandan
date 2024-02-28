@@ -58,7 +58,7 @@ class Player():
         self.new_weights = None
         self.model = MLPActorCritic((ActionNumber, 516 + ActionNumber * 54), ActionNumber)
         self.model_q = MLPQNetwork(567)
-        with open('/home/zhaoyp/guandan_tog/actor_torch/q_network.ckpt', 'rb') as f:  # load DMC model
+        with open('/aiarena/nas/guandan_tog/actor_torch/q_network.ckpt', 'rb') as f:  # load DMC model
             tf_weights = pickle.load(f)
         self.model_q.load_tf_weights(tf_weights)
 
@@ -78,7 +78,7 @@ class Player():
         logger.configure(str(self.args.log_path))
 
         # 模型文件路径
-        self.args.ckpt_path = Path('/home/zhaoyp/guandan_tog/learner_torch/ckpt_bak')
+        self.args.ckpt_path = Path('/aiarena/nas/guandan_tog/learner_torch/ckpt_bak')
         # 开模型订阅
         # subscriber = Process(target=run_weights_subscriber, args=(self.args, None))
         # subscriber.start()
@@ -223,7 +223,8 @@ def run_one_player(index, args):
         socket = context.socket(zmq.REP)
         socket.bind(f'tcp://*:{6000+index}')
     except:
-        os.system("bash /home/zhaoyp/guandan_tog/actor_torch/rekill.sh")
+        print("killing due to zmq")
+        os.system("bash /aiarena/nas/guandan_tog/actor_torch/rekill.sh")
         exit()
 
 
@@ -242,9 +243,10 @@ def run_one_player(index, args):
                 player.save_data(-int(state[1]))
             player.send_data(state)
             rss = float(psutil.Process(os.getpid()).memory_info().rss / 1024 / 1024 / 1024)                    
-            # print(rss, 'GB')
+            print(f'rss={rss}GB')
             if rss > 0.7:
-                os.system("bash /home/zhaoyp/guandan_tog/actor_torch/rekill.sh")
+                print(f'rss={rss} > 0.7, killing...')
+                os.system("bash /aiarena/nas/guandan_tog/actor_torch/rekill.sh")
                 exit()
             player.update_weight()
         else:

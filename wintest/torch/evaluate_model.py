@@ -3,7 +3,7 @@ import time
 
 
 def copy():
-    path = '/home/zhaoyp/guandan_tog/learner_torch/LEARNER-2023-11-08-15-38-36/ckpt/'
+    path = '/aiarena/nas/guandan_tog/learner_torch/LEARNER-2024-01-08-13-32-33/ckpt/'
     files = os.listdir(path)
     dic = {}
     for name in files:
@@ -13,7 +13,10 @@ def copy():
             k = num // 5000
             dic[k] = path + name
 
-    dest = '/home/zhaoyp/guandan_tog/wintest/torch/models'
+    dest = '/aiarena/nas/guandan_tog/wintest/torch/models'
+    if not os.path.exists(dest):
+        # 创建路径
+        os.makedirs(dest)
     exist = os.listdir(dest)
     for k, v in dic.items():
         if v.split('/')[-1] not in exist:
@@ -22,7 +25,7 @@ def copy():
     return len(res)
 
 def current_log(oppo):
-    path = '/home/zhaoyp/guandan_tog/wintest/torch/'
+    path = '/aiarena/nas/guandan_tog/wintest/torch/'
     files = os.listdir(path)
     tested = []
     for name in files:

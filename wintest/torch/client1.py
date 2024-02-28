@@ -351,7 +351,7 @@ class ExampleClient(WebSocketClient):
             print('------------------对局结束-------------------')
             #print('胜局统计', message['victoryNum'], file=resfile)
             #print(self.tongji, file=resfile)
-            with open(f'/home/zhaoyp/guandan_tog/wintest/torch/{self.args.resfile}', mode='w', encoding='utf-8') as f:
+            with open(f'/aiarena/nas/guandan_tog/wintest/torch/{self.args.resfile}', mode='w', encoding='utf-8') as f:
                 f.write('胜局统计:'+str(message['victoryNum']) +'\n'+ str(self.tongji))
             # print('------------------对局结束-------------------')
 
